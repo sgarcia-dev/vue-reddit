@@ -54,7 +54,7 @@ export default {
   flex-direction: row;
 }
 
-.posts__layout-col:first-child {
-  flex-basis: 30%;
+.posts__layout-col {
+  flex: 0 0 50%;
 }
 </style>

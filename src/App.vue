@@ -5,6 +5,12 @@
 </template>
 
 <style lang="scss">
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #fafafa;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -12,16 +18,17 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+a {
+  font-weight: bold;
+  color: #ff6f00;
+  transition: color 0.3s;
+  text-decoration: none;
+  &:hover {
+    color: #f57c00;
+  }
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  &.router-link-exact-active {
+    color: #fb8c00;
   }
 }
 </style>
