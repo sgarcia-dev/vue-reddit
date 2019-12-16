@@ -10,6 +10,7 @@ export const SET_NETWORK_STATE = 'SET_NETWORK_STATE';
 export const SET_NETWORK_ERROR = 'SET_NETWORK_ERROR';
 export const SET_POST_AS_READ = 'SET_POST_AS_READ';
 export const SET_POST_AS_DISMISSED = 'SET_POST_AS_DISMISSED';
+export const SET_PAGE_NUMBER = 'SET_PAGE_NUMBER';
 
 const VUEX_CACHE_NAME = 'VUE_REDDIT_CACHE';
 const cache = set.bind(this, VUEX_CACHE_NAME);
@@ -20,7 +21,9 @@ let initialState = {
   readPosts: cachedState.readPosts || [],
   dismissedPosts: cachedState.dismissedPosts || [],
   networkBusy: false,
-  networkError: null
+  networkError: null,
+  pageSize: 10,
+  pageNumber: cachedState.pageNumber || 1
 };
 
 export default new Vuex.Store({
@@ -30,6 +33,17 @@ export default new Vuex.Store({
       return state.posts.filter(({ id }) => {
         return state.dismissedPosts.indexOf(id) === -1;
       });
+    },
+    pagedPosts: (state, getters) => {
+      const pagedPosts = [];
+      getters.visiblePosts.forEach((post, i) => {
+        if (i % state.pageSize === 0) pagedPosts.push([]);
+        pagedPosts[pagedPosts.length - 1].push(post);
+      });
+      return pagedPosts;
+    },
+    postsOnPage: (state, getters) => {
+      return getters.pagedPosts[state.pageNumber - 1];
     }
   },
   mutations: {
@@ -54,6 +68,10 @@ export default new Vuex.Store({
         state.dismissedPosts.push(id);
         cache(state);
       }
+    },
+    [SET_PAGE_NUMBER](state, { page }) {
+      Vue.set(state, 'pageNumber', page);
+      cache(state);
     }
   },
   actions: {

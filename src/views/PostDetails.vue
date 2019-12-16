@@ -69,7 +69,7 @@ export default {
   max-width: 100%;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 768px) {
   .mobile-only {
     display: none;
   }

@@ -14,6 +14,7 @@
     >
       <div class="posts__layout-col">
         <PostsList />
+        <PaginationControls />
       </div>
       <div class="posts__layout-col">
         <router-view />
@@ -25,9 +26,10 @@
 <script>
 import { mapState } from 'vuex';
 import PostsList from '@/components/PostsList';
+import PaginationControls from '@/components/PaginationControls';
 
 export default {
-  components: { PostsList },
+  components: { PostsList, PaginationControls },
   created() {
     this.$store.dispatch('getPosts');
   },
@@ -45,7 +47,7 @@ export default {
   height: 100vh;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .posts__main-view {
     overflow-x: hidden;
   }

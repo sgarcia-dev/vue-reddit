@@ -1,32 +1,27 @@
 <template>
   <ul class="posts-list__container">
-    <transition-group name="post-transition" tag="div">
-      <div v-for="post in visiblePosts" :key="post.id" class="post__container">
-        <div class="post__thumbnail" v-if="post.thumbnail !== 'default'">
-          <img :src="post.thumbnail" alt="" />
-        </div>
-        <div class="post__preview">
-          <h5 class="post__title" :class="{ read: isRead(post.id) }">
-            <router-link
-              :to="`/${post.id}`"
-              @click.native="markAsRead(post.id)"
-            >
-              {{ post.title }}
-              <span class="post__author">| By {{ post.author }}</span>
-            </router-link>
-          </h5>
-          <h5>
-            Created at {{ post.created_utc | toDateString }} |
-            {{ post.created_utc | toHoursAgo }}
-          </h5>
-          <h5>
-            {{ post.num_comments }} Comments | Score
-            {{ post.score | toSimplifiedScore }}
-          </h5>
-          <a href="#" @click.prevent="dismissPost(post.id)">Dismiss</a>
-        </div>
+    <div v-for="post in postsOnPage" :key="post.id" class="post__container">
+      <div class="post__thumbnail" v-if="post.thumbnail !== 'default'">
+        <img :src="post.thumbnail" alt="" />
       </div>
-    </transition-group>
+      <div class="post__preview">
+        <h5 class="post__title" :class="{ read: isRead(post.id) }">
+          <router-link :to="`/${post.id}`" @click.native="markAsRead(post.id)">
+            {{ post.title }}
+            <span class="post__author">| By {{ post.author }}</span>
+          </router-link>
+        </h5>
+        <h5>
+          Created at {{ post.created_utc | toDateString }} |
+          {{ post.created_utc | toHoursAgo }}
+        </h5>
+        <h5>
+          {{ post.num_comments }} Comments | Score
+          {{ post.score | toSimplifiedScore }}
+        </h5>
+        <a href="#" @click.prevent="dismissPost(post.id)">Dismiss</a>
+      </div>
+    </div>
   </ul>
 </template>
 
@@ -36,7 +31,7 @@ import { mapState, mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapState(['posts', 'readPosts']),
-    ...mapGetters(['visiblePosts'])
+    ...mapGetters(['postsOnPage'])
   },
   filters: {
     toDateString(value) {
@@ -131,15 +126,5 @@ export default {
 .post__author {
   color: #616161;
   margin-left: 0.5em;
-}
-
-.post-transition-enter,
-.post-transition-leave-to {
-  opacity: 0;
-}
-
-.post-transition-enter-active,
-.post-transition-leave-active {
-  transition: opacity 1s;
 }
 </style>
