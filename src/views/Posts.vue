@@ -1,12 +1,16 @@
 <template>
   <div class="posts__main-view">
-    <h4 v-if="networkBusy" class="posts__loading-indicator">Loading ...</h4>
+    <transition name="loading">
+      <h4 v-if="networkBusy" class="posts__loading-indicator">
+        Loading ...
+      </h4>
+    </transition>
     <h4 v-if="networkError" class="posts__network-error">
       Network error, please try again later.
     </h4>
     <div class="posts__layout">
       <div class="posts__layout-col">
-        <PostsList :posts="posts" />
+        <PostsList />
       </div>
       <div class="posts__layout-col">
         <router-view />
@@ -36,16 +40,28 @@ export default {
 }
 
 .posts__loading-indicator {
-  animation: 0.2s linear 0s infinite alternate fade-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  padding: 0.5em;
+  margin: 0;
+  background-color: darkorange;
+  color: white;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.5s;
 }
 
-@keyframes fade-in-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.5;
-  }
+.loading-enter,
+.loading-leave-to {
+  opacity: 0;
+}
+
+.loading-enter-active,
+.loading-leave-active {
+  transition: opacity 1s;
 }
 
 .posts__network-error {
@@ -55,9 +71,12 @@ export default {
 .posts__layout {
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 .posts__layout-col {
   flex: 0 0 50%;
+  max-height: 100%;
+  overflow-y: scroll;
 }
 </style>

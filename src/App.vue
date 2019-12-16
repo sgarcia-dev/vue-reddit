@@ -11,6 +11,10 @@ body {
   background-color: #fafafa;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -21,14 +25,14 @@ body {
 a {
   font-weight: bold;
   color: #ff6f00;
-  transition: color 0.3s;
+  transition: color 0.2s;
   text-decoration: none;
   &:hover {
     color: #f57c00;
   }
 
   &.router-link-exact-active {
-    color: #fb8c00;
+    color: #ffa737;
   }
 }
 </style>

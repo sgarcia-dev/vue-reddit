@@ -1,14 +1,14 @@
 <template>
-  <ul class="posts__list-container">
-    <div v-for="post in posts" :key="post.id" class="posts__post-container">
-      <div class="posts__post-thumbnail" v-if="post.thumbnail !== 'default'">
+  <ul class="posts-list__container">
+    <div v-for="post in posts" :key="post.id" class="post__container">
+      <div class="post__thumbnail" v-if="post.thumbnail !== 'default'">
         <img :src="post.thumbnail" alt="" />
       </div>
-      <div class="posts__post-preview">
-        <h5 class="posts__post-title">
-          <router-link :to="`/${post.id}`">
+      <div class="post__preview">
+        <h5 class="post__title" :class="{ read: isRead(post.id) }">
+          <router-link :to="`/${post.id}`" @click.native="markAsRead(post.id)">
             {{ post.title }}
-            <span class="posts__post-author">| By {{ post.author }}</span>
+            <span class="post__author">| By {{ post.author }}</span>
           </router-link>
         </h5>
         <h5>
@@ -25,12 +25,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
-  props: {
-    posts: {
-      type: Array,
-      default: () => []
-    }
+  computed: {
+    ...mapState(['posts', 'readPosts'])
   },
   filters: {
     toDateString(value) {
@@ -46,29 +45,30 @@ export default {
     toSimplifiedScore(value) {
       return value > 1000 ? Math.floor(value / 1000) + 'K' : value;
     }
+  },
+  methods: {
+    isRead(id) {
+      return this.readPosts.includes(id);
+    },
+    markAsRead(id) {
+      this.$store.commit('SET_POST_AS_READ', { id });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.posts__list-container {
+.posts-list__container {
   list-style: none;
   padding: 1em;
-  margin-top: 0;
-  max-height: 100vh;
-  overflow-y: scroll;
-  box-sizing: border-box;
-  margin-bottom: 0;
+  margin: 0;
 }
 
-.posts__post-container {
+.post__container {
   border-radius: 5px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-.posts__post-container {
   background: #fff;
   border-radius: 2px;
   position: relative;
@@ -94,7 +94,7 @@ export default {
   }
 }
 
-.posts__post-thumbnail {
+.post__thumbnail {
   flex-grow: 0;
   flex-shrink: 0;
   margin-right: 1em;
@@ -104,17 +104,21 @@ export default {
   }
 }
 
-.posts__post-preview {
+.post__preview {
   flex: 1 1 0;
 }
 
-.posts__post-title,
-.posts__post-author {
+.post__title,
+.post__author {
   margin: 0;
   display: inline-block;
 }
 
-.posts__post-author {
+.post__title.read a {
+  color: gray;
+}
+
+.post__author {
   color: #616161;
   margin-left: 0.5em;
 }

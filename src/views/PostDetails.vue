@@ -3,19 +3,20 @@
     <h1>{{ post.title }}</h1>
     <img
       v-if="isImage"
-      class="post__image-preview"
+      class="post__media-preview"
       :src="post.url"
       :alt="post.title"
     />
     <img
       v-if="isGfycat"
-      class="post__image-preview"
+      class="post__media-preview"
       :src="post.media.oembed.thumbnail_url"
       :alt="post.title"
     />
     <video
       v-if="isRedditVideo"
       :src="post.media.reddit_video.fallback_url"
+      class="post__media-preview"
       controls
       autoplay
     ></video>
@@ -58,7 +59,7 @@ export default {
 .post__details-view {
   padding: 1em;
 }
-.post__image-preview {
+.post__media-preview {
   max-width: 100%;
 }
 </style>
