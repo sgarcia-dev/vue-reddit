@@ -1,7 +1,9 @@
 <template>
   <ul class="posts__list-container">
     <div v-for="post in posts" :key="post.id">
-      {{ post.title }}
+      <router-link :to="`/${post.id}`">
+        <h3>{{ post.title }}</h3>
+      </router-link>
     </div>
   </ul>
 </template>
@@ -17,4 +19,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.posts__list-container {
+  list-style: none;
+  padding-left: 0;
+}
+</style>

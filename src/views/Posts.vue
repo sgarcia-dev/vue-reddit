@@ -1,12 +1,18 @@
 <template>
   <div>
-    <h1>Posts View</h1>
+    <h1>Vue Reddit</h1>
     <h4 v-if="networkBusy" class="posts__loading-indicator">Loading ...</h4>
     <h4 v-if="networkError" class="posts__network-error">
       Network error, please try again later.
     </h4>
-    <PostsList :posts="posts" />
-    <router-view />
+    <div class="posts__layout">
+      <div class="posts__layout-col">
+        <PostsList :posts="posts" />
+      </div>
+      <div class="posts__layout-col">
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,5 +47,14 @@ export default {
 
 .posts__network-error {
   color: red;
+}
+
+.posts__layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.posts__layout-col:first-child {
+  flex-basis: 30%;
 }
 </style>
