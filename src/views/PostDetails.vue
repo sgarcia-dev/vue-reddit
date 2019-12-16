@@ -1,5 +1,6 @@
 <template>
   <div v-if="post" class="post__details-view">
+    <a class="mobile-only" href="#" @click.prevent="backToHome">Back to Home</a>
     <h1>{{ post.title }}</h1>
     <img
       v-if="isImage"
@@ -51,6 +52,11 @@ export default {
       const { media } = this.post;
       return media && media.type === 'gfycat.com';
     }
+  },
+  methods: {
+    backToHome() {
+      this.$router.push('/');
+    }
   }
 };
 </script>
@@ -61,5 +67,11 @@ export default {
 }
 .post__media-preview {
   max-width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  .mobile-only {
+    display: none;
+  }
 }
 </style>

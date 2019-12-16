@@ -8,7 +8,10 @@
     <h4 v-if="networkError" class="posts__network-error">
       Network error, please try again later.
     </h4>
-    <div class="posts__layout">
+    <div
+      class="posts__layout"
+      :class="{ 'is-on-preview': pageName === 'post' }"
+    >
       <div class="posts__layout-col">
         <PostsList />
       </div>
@@ -29,7 +32,10 @@ export default {
     this.$store.dispatch('getPosts');
   },
   computed: {
-    ...mapState(['posts', 'networkBusy', 'networkError'])
+    ...mapState(['posts', 'networkBusy', 'networkError']),
+    pageName() {
+      return this.$route.name;
+    }
   }
 };
 </script>
@@ -37,6 +43,20 @@ export default {
 <style lang="scss" scoped>
 .posts__main-view {
   height: 100vh;
+}
+
+@media screen and (max-width: 600px) {
+  .posts__main-view {
+    overflow-x: hidden;
+  }
+
+  .posts__layout {
+    width: 200vw;
+    transition: transform 0.5s ease-in-out;
+    &.is-on-preview {
+      transform: translateX(-100vw);
+    }
+  }
 }
 
 .posts__loading-indicator {
