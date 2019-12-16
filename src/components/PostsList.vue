@@ -54,6 +54,11 @@ export default {
 .posts__list-container {
   list-style: none;
   padding: 1em;
+  margin-top: 0;
+  max-height: 100vh;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  margin-bottom: 0;
 }
 
 .posts__post-container {

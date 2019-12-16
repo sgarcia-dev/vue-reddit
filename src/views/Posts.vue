@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1>Vue Reddit</h1>
+  <div class="posts__main-view">
     <h4 v-if="networkBusy" class="posts__loading-indicator">Loading ...</h4>
     <h4 v-if="networkError" class="posts__network-error">
       Network error, please try again later.
@@ -32,6 +31,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.posts__main-view {
+  height: 100vh;
+}
+
 .posts__loading-indicator {
   animation: 0.2s linear 0s infinite alternate fade-in-out;
 }
