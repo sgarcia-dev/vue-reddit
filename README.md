@@ -1,4 +1,4 @@
-# vue-reddit
+# vue-reddit | [Live Version](https://vue-reddit.netlify.com/)
 
 A minimal Vue Wrapper around Reddit's Top popular post page (https://reddit.com/top) built with the Vue stack as a timed challenge under 5 hours.
 
