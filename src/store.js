@@ -59,6 +59,7 @@ export default new Vuex.Store({
   actions: {
     async getPosts({ commit }) {
       commit(SET_NETWORK_STATE, { isBusy: true });
+      commit(SET_NETWORK_ERROR, { message: '' });
       try {
         const posts = await redditService.getTopPosts();
         commit(SET_POSTS, { posts });
